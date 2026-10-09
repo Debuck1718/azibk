@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 625" width="1000" height="625" role="img" aria-label="ATLAS UI placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#101012"/>
+      <stop offset="100%" stop-color="#0A0A0B"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="30%" cy="18%" r="80%">
+      <stop offset="0%" stop-color="#5B8CFF" stop-opacity="0.60"/>
+      <stop offset="55%" stop-color="#8FB0FF" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#8FB0FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="82%" cy="88%" r="65%">
+      <stop offset="0%" stop-color="#8FB0FF" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#8FB0FF" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#EDEAE4" stroke-opacity="0.055"/>
+    </pattern>
+    <filter id="soft"><feGaussianBlur stdDeviation="26"/></filter>
+  </defs>
+
+  <rect width="1000" height="625" fill="url(#bg)"/>
+  <rect width="1000" height="625" fill="url(#grid)"/>
+  <rect width="1000" height="625" fill="url(#glow)"/>
+  <rect width="1000" height="625" fill="url(#glow2)"/>
+
+  <g filter="url(#soft)" opacity="0.55">
+    <rect x="40" y="200" width="420" height="420" rx="80" fill="#5B8CFF" opacity="0.32"/>
+  </g>
+
+  <g><circle cx="44.2" cy="23.0" r="2.4" fill="#EDEAE4" opacity="0.10"/><circle cx="25.6" cy="27.6" r="1.1" fill="#EDEAE4" opacity="0.17"/><circle cx="7.0" cy="32.2" r="2.8" fill="#EDEAE4" opacity="0.24"/><circle cx="88.4" cy="36.8" r="1.5" fill="#EDEAE4" opacity="0.31"/><circle cx="69.8" cy="41.4" r="3.2" fill="#EDEAE4" opacity="0.38"/><circle cx="51.2" cy="46.0" r="1.9" fill="#EDEAE4" opacity="0.10"/><circle cx="32.6" cy="50.6" r="3.6" fill="#EDEAE4" opacity="0.17"/><circle cx="14.0" cy="55.2" r="2.3" fill="#EDEAE4" opacity="0.24"/><circle cx="95.4" cy="3.8" r="1.0" fill="#EDEAE4" opacity="0.31"/><circle cx="76.8" cy="8.4" r="2.7" fill="#EDEAE4" opacity="0.38"/><circle cx="58.2" cy="13.0" r="1.4" fill="#EDEAE4" opacity="0.10"/><circle cx="39.6" cy="17.6" r="3.1" fill="#EDEAE4" opacity="0.17"/><circle cx="21.0" cy="22.2" r="1.8" fill="#EDEAE4" opacity="0.24"/><circle cx="2.4" cy="26.8" r="3.5" fill="#EDEAE4" opacity="0.31"/><circle cx="83.8" cy="31.4" r="2.2" fill="#EDEAE4" opacity="0.38"/><circle cx="65.2" cy="36.0" r="3.9" fill="#EDEAE4" opacity="0.10"/><circle cx="46.6" cy="40.6" r="2.6" fill="#EDEAE4" opacity="0.17"/><circle cx="28.0" cy="45.2" r="1.3" fill="#EDEAE4" opacity="0.24"/><circle cx="9.4" cy="49.8" r="3.0" fill="#EDEAE4" opacity="0.31"/><circle cx="90.8" cy="54.4" r="1.7" fill="#EDEAE4" opacity="0.38"/><circle cx="72.2" cy="3.0" r="3.4" fill="#EDEAE4" opacity="0.10"/><circle cx="53.6" cy="7.6" r="2.1" fill="#EDEAE4" opacity="0.17"/><circle cx="35.0" cy="12.2" r="3.8" fill="#EDEAE4" opacity="0.24"/><circle cx="16.4" cy="16.8" r="2.5" fill="#EDEAE4" opacity="0.31"/><circle cx="97.8" cy="21.4" r="1.2" fill="#EDEAE4" opacity="0.38"/><circle cx="79.2" cy="26.0" r="2.9" fill="#EDEAE4" opacity="0.10"/></g>
+
+  <!-- A ribbon suggesting motion / data -->
+  <path d="M-40 350 C 220 380, 520 460, 1040 390"
+        fill="none" stroke="#5B8CFF" stroke-opacity="0.75" stroke-width="2"/>
+  <path d="M-40 390 C 240 430, 540 500, 1040 440"
+        fill="none" stroke="#8FB0FF" stroke-opacity="0.35" stroke-width="1.2"/>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="56" y="86" fill="#8FB0FF" font-size="15" letter-spacing="5">03 / 03</text>
+    <text x="56" y="527" fill="#EDEAE4" font-size="60" font-weight="600" letter-spacing="-1.5">ATLAS UI</text>
+    <text x="56" y="565" fill="#EDEAE4" fill-opacity="0.55" font-size="17" letter-spacing="3">COMPONENT GALLERY</text>
+  </g>
+
+  <rect x="0.5" y="0.5" width="999" height="624" fill="none" stroke="#5B8CFF" stroke-opacity="0.25"/>
+
+  <!-- Watermark so nobody mistakes a placeholder for finished work -->
+  <text x="986" y="600" text-anchor="end" fill="#EDEAE4" fill-opacity="0.28" font-size="13" font-family="ui-monospace, monospace" letter-spacing="2">PLACEHOLDER — REPLACE ME</text>
+</svg>

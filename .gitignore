@@ -1,0 +1,31 @@
+node_modules
+.next
+out
+build
+dist
+
+# generated / build metadata
+next-env.d.ts
+tsconfig.tsbuildinfo
+
+# env
+.env
+.env*.local
+
+# misc
+.DS_Store
+Thumbs.db
+*.pem
+
+# logs — includes the detached dev-server logs
+*-debug.log*
+npm-debug.log*
+yarn-error.log*
+server.log
+server.err.log
+
+# local browser QA screenshots from scripts/shots.mjs
+qa-*.png
+
+# vercel
+.vercel

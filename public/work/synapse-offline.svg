@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 625" width="1000" height="625" role="img" aria-label="SYNAPSE placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#101012"/>
+      <stop offset="100%" stop-color="#0A0A0B"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="30%" cy="18%" r="80%">
+      <stop offset="0%" stop-color="#C084FC" stop-opacity="0.60"/>
+      <stop offset="55%" stop-color="#E0C3FE" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#E0C3FE" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="82%" cy="88%" r="65%">
+      <stop offset="0%" stop-color="#E0C3FE" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#E0C3FE" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#EDEAE4" stroke-opacity="0.055"/>
+    </pattern>
+    <filter id="soft"><feGaussianBlur stdDeviation="26"/></filter>
+  </defs>
+
+  <rect width="1000" height="625" fill="url(#bg)"/>
+  <rect width="1000" height="625" fill="url(#grid)"/>
+  <rect width="1000" height="625" fill="url(#glow)"/>
+  <rect width="1000" height="625" fill="url(#glow2)"/>
+
+  <g filter="url(#soft)" opacity="0.55">
+    <rect x="-20" y="170" width="420" height="420" rx="80" fill="#C084FC" opacity="0.32"/>
+  </g>
+
+  <g><circle cx="55.4" cy="35.0" r="3.8" fill="#EDEAE4" opacity="0.10"/><circle cx="7.2" cy="53.2" r="2.5" fill="#EDEAE4" opacity="0.17"/><circle cx="59.0" cy="15.4" r="1.2" fill="#EDEAE4" opacity="0.24"/><circle cx="10.8" cy="33.6" r="2.9" fill="#EDEAE4" opacity="0.31"/><circle cx="62.6" cy="51.8" r="1.6" fill="#EDEAE4" opacity="0.38"/><circle cx="14.4" cy="14.0" r="3.3" fill="#EDEAE4" opacity="0.10"/><circle cx="66.2" cy="32.2" r="2.0" fill="#EDEAE4" opacity="0.17"/><circle cx="18.0" cy="50.4" r="3.7" fill="#EDEAE4" opacity="0.24"/><circle cx="69.8" cy="12.6" r="2.4" fill="#EDEAE4" opacity="0.31"/><circle cx="21.6" cy="30.8" r="1.1" fill="#EDEAE4" opacity="0.38"/><circle cx="73.4" cy="49.0" r="2.8" fill="#EDEAE4" opacity="0.10"/><circle cx="25.2" cy="11.2" r="1.5" fill="#EDEAE4" opacity="0.17"/><circle cx="77.0" cy="29.4" r="3.2" fill="#EDEAE4" opacity="0.24"/><circle cx="28.8" cy="47.6" r="1.9" fill="#EDEAE4" opacity="0.31"/><circle cx="80.6" cy="9.8" r="3.6" fill="#EDEAE4" opacity="0.38"/><circle cx="32.4" cy="28.0" r="2.3" fill="#EDEAE4" opacity="0.10"/><circle cx="84.2" cy="46.2" r="1.0" fill="#EDEAE4" opacity="0.17"/><circle cx="36.0" cy="8.4" r="2.7" fill="#EDEAE4" opacity="0.24"/><circle cx="87.8" cy="26.6" r="1.4" fill="#EDEAE4" opacity="0.31"/><circle cx="39.6" cy="44.8" r="3.1" fill="#EDEAE4" opacity="0.38"/><circle cx="91.4" cy="7.0" r="1.8" fill="#EDEAE4" opacity="0.10"/><circle cx="43.2" cy="25.2" r="3.5" fill="#EDEAE4" opacity="0.17"/><circle cx="95.0" cy="43.4" r="2.2" fill="#EDEAE4" opacity="0.24"/><circle cx="46.8" cy="5.6" r="3.9" fill="#EDEAE4" opacity="0.31"/><circle cx="98.6" cy="23.8" r="2.6" fill="#EDEAE4" opacity="0.38"/><circle cx="50.4" cy="42.0" r="1.3" fill="#EDEAE4" opacity="0.10"/></g>
+
+  <!-- A ribbon suggesting motion / data -->
+  <path d="M-40 390 C 220 340, 520 510, 1040 360"
+        fill="none" stroke="#C084FC" stroke-opacity="0.75" stroke-width="2"/>
+  <path d="M-40 430 C 240 390, 540 550, 1040 410"
+        fill="none" stroke="#E0C3FE" stroke-opacity="0.35" stroke-width="1.2"/>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="56" y="86" fill="#E0C3FE" font-size="15" letter-spacing="5">02 / 03</text>
+    <text x="56" y="527" fill="#EDEAE4" font-size="60" font-weight="600" letter-spacing="-1.5">SYNAPSE</text>
+    <text x="56" y="565" fill="#EDEAE4" fill-opacity="0.55" font-size="17" letter-spacing="3">COLLABORATIVE CANVAS</text>
+  </g>
+
+  <rect x="0.5" y="0.5" width="999" height="624" fill="none" stroke="#C084FC" stroke-opacity="0.25"/>
+
+  <!-- Watermark so nobody mistakes a placeholder for finished work -->
+  <text x="986" y="600" text-anchor="end" fill="#EDEAE4" fill-opacity="0.28" font-size="13" font-family="ui-monospace, monospace" letter-spacing="2">PLACEHOLDER — REPLACE ME</text>
+</svg>
