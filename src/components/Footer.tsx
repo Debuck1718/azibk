@@ -1,5 +1,5 @@
 import { Marquee } from "./ui/Marquee";
-import { profile } from "@/lib/site";
+import { profile, parent } from "@/lib/site";
 
 export function Footer() {
   // Built from the real strings rather than hard-coded, so it cannot drift.
@@ -13,9 +13,9 @@ export function Footer() {
           speed="slow"
           items={[
             profile.name.toUpperCase(),
-            "FRAMEWORKS",
-            "ENGINES",
-            "SYSTEMS",
+            "BESPOKE FRAMING",
+            "CONSERVATION",
+            "MUSEUM GLASS",
           ]}
           className="[&_span.font-display]:text-[15vw] [&_span.font-display]:leading-[0.85] [&_span.font-display]:text-ink-line"
         />
@@ -27,12 +27,20 @@ export function Footer() {
         </p>
 
         <p className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-bone-faint">
-          Built with Next.js, TypeScript &amp; Tailwind — no template.
+          A venture of{" "}
+          <a
+            href={parent.url}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="link-underline text-bone-dim hover:text-[rgb(var(--accent))]"
+          >
+            {parent.name}
+          </a>{" "}
+          ↗
         </p>
 
         <a
-          href="#top"
-          className="group flex items-center gap-3 font-mono text-[0.62rem] uppercase tracking-[0.18em] text-bone-faint transition-colors hover:text-bone"
+          href="#top"          className="group flex items-center gap-3 font-mono text-[0.62rem] uppercase tracking-[0.18em] text-bone-faint transition-colors hover:text-bone"
         >
           Back to top
           <span

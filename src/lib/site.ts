@@ -1,10 +1,35 @@
-﻿/**
+/**
  * ---------------------------------------------------------------------------
  * THIS IS THE ONLY FILE YOU NEED TO EDIT TO MAKE THE SITE YOURS.
  * ---------------------------------------------------------------------------
- * Everything the page renders — your name, links, frameworks, projects —
- * comes from here. No component has hard-coded copy.
+ * Everything the page renders — the studio name, the frames, the services,
+ * the order form — comes from here. No component has hard-coded copy.
+ *
+ * ---------------------------------------------------------------------------
+ * WHAT THIS SITE IS (and is not)
+ * ---------------------------------------------------------------------------
+ * This is the **picture framing studio** — the gallery of finished work and the
+ * place customers commission their own pieces.
+ *
+ * It is NOT a software site. Everything about engineering, software, systems,
+ * AI and cybersecurity belongs to the parent company, Evantra De-Buckman
+ * Ventures, at https://www.evantradebuckman.com — the platform owner. They
+ * built this site and they run the business; AziBK is the brand customers see.
  */
+
+/* -------------------------------------------------------------------------- */
+/*  STUDIO IDENTITY                                                           */
+/* -------------------------------------------------------------------------- */
+
+export const parent = {
+  name: 'Evantra De-Buckman Ventures',
+  short: 'Evantra',
+  url: 'https://www.evantradebuckman.com',
+  tagline: 'The company that owns and operates the AziBK platform.',
+  /** Used in the footer credit and the attribution cards. */
+  blurb:
+    'Evantra De-Buckman Ventures builds technology ventures from Ghana for the world — engineering, AI and cybersecurity. They created and manage the AziBK framing platform, and they handle its online orders, hosting and support. AziBK is the framing brand you are dealing with; Evantra is the business behind it.',
+};
 
 export type Profile = {
   name: string;
@@ -12,404 +37,442 @@ export type Profile = {
   role: string;
   location: string;
   email: string;
+  phone: string;
+  /** Shown in the hero pill. */
   availability: string;
-  /** Rotating words in the hero. Keep them short — they are set at display size. */
+  /** Rotating words in the hero — keep them short, they are set at display size. */
   rotating: string[];
   blurb: string;
-  /** Longer, two-sentence pitch used in the About section. */
   about: string;
   socials: { label: string; href: string }[];
 };
 
 export const profile: Profile = {
-  name: 'Debuck',
-  initials: 'DB',
-  role: 'Framework & Systems Engineer',
-  location: 'Remote · Worldwide',
-  email: 'hello@example.com',
-  availability: 'Taking on 2 projects for the next quarter',
-  rotating: ['frameworks.', 'engines.', 'systems.', 'interfaces.'],
+  name: 'AziBK',
+  initials: 'AZ',
+  role: 'Picture Framing Studio',
+  location: 'Accra, Ghana',
+  email: 'Kofiaziben@gmail.com',
+  phone: '+233 55 246 1958',
+  availability: 'Taking commissions — 2 week turnaround',
+  rotating: ['photographs.', 'artworks.', 'heirlooms.', 'memories.'],
   blurb:
-    'I build the load-bearing layer: the framework, the engine, the design system that a product is assembled from. Not pages — platforms.',
+    'We build frames around the things you cannot replace. Bespoke framing, conservation mounting and museum glazing — measured, cut and finished by hand in Accra.',
   about:
-    'Most of my work happens one level below the product. I take an idea that is too slow, too coupled or too inconsistent to ship twice, and I turn it into a framework the rest of a team can build on without thinking about it. The measure of that work is not how clever the abstraction is, but how boring it becomes to use — and how little it needs me afterwards.',
+    'A frame is not decoration around a picture. It is the structure that decides whether that picture survives the next fifty years — the mount that stops it sticking, the glass that filters the light, the joints that keep it square when the air changes. We treat every commission as a small piece of conservation work, because the cheapest part of framing is the frame, and the most expensive part is regret.',
   socials: [
-    { label: 'GitHub', href: 'https://github.com/Debuck1718' },
-    { label: 'LinkedIn', href: 'https://linkedin.com' },
-    { label: 'X', href: 'https://x.com' },
-    { label: 'Read.cv', href: 'https://read.cv' },
+    { label: 'Instagram', href: 'https://instagram.com' },
+    { label: 'Facebook', href: 'https://facebook.com' },
+    { label: 'WhatsApp', href: 'https://wa.me/233503190257' },
   ],
 };
 
 export type Stat = { value: string; label: string; note?: string };
 
 export const stats: Stat[] = [
-  { value: '11', label: 'Frameworks shipped', note: 'open source + in-house' },
-  { value: '3.2k', label: 'GitHub stars earned', note: 'across repositories' },
-  { value: '48ms', label: 'p95 render budget', note: 'worst-case measured frame' },
-  { value: '7yrs', label: 'Building abstractions', note: 'and deleting them again' },
+  { value: '120+', label: 'Pieces framed', note: 'since opening the studio' },
+  { value: '40yr', label: 'Grade materials', note: 'conservation & archival boards' },
+  { value: '99%', label: 'UV filtered', note: 'on museum glass options' },
+  { value: '2wk', label: 'Typical turnaround', note: 'rush available on request' },
 ];
 
 /* -------------------------------------------------------------------------- */
-/*  THE ARSENAL — categorised, tiered competence                              */
+/*  MATERIALS & CRAFT — the framing equivalent of a capability matrix         */
 /* -------------------------------------------------------------------------- */
 
-export type Tier = 'core' | 'fluent' | 'working';
+export type Tier = 'house' | 'premium' | 'select';
 
-export type Skill = {
+export type Item = {
   name: string;
   tier: Tier;
-  /** Shown in the detail panel — be specific, this is what sells it. */
+  /** Explained in the detail panel — this is what sells the upgrade. */
   note: string;
-  /** 0–100. Rendered as the bar. Only used for layout, not a literal claim. */
+  /** 0–100. Rendered as the depth bar; decorative, not a literal claim. */
   depth: number;
-  /** Optional path to a monochrome logo mark under /public. */
+  /** Optional icon under /public/marks. Omit and a tier dot is drawn. */
   icon?: string;
 };
 
-export type SkillGroup = {
+export type ItemGroup = {
   id: string;
   title: string;
   caption: string;
-  skills: Skill[];
+  items: Item[];
 };
 
-export const skillGroups: SkillGroup[] = [
+export const skillGroups: ItemGroup[] = [
   {
-    id: 'frontend',
-    title: 'Frontend Frameworks',
-    caption: 'Where I spend most of my hours.',
-    skills: [
-      { name: 'React', tier: 'core', depth: 96, icon: '/marks/react.svg', note: 'Suspense, RSC boundaries, concurrent rendering, custom reconciler experiments.' },
-      { name: 'Next.js', tier: 'core', depth: 94, icon: '/marks/nextjs.svg', note: 'App Router, streaming SSR, route handlers, ISR strategies, edge middleware.' },
-      { name: 'TypeScript', tier: 'core', depth: 95, icon: '/marks/typescript.svg', note: 'Conditional & mapped types, generic inference design, type-level APIs teams can actually read.' },
-      { name: 'Vue 3', tier: 'fluent', depth: 78, icon: '/marks/vue.svg', note: 'Composition API, custom renderers, `v-memo` profiling.' },
-      { name: 'Svelte / SvelteKit', tier: 'fluent', depth: 74, icon: '/marks/svelte.svg', note: 'Compiler-first mental model, runes, form actions.' },
-      { name: 'Astro', tier: 'working', depth: 66, icon: '/marks/astro.svg', note: 'Islands architecture for content-heavy, zero-JS-by-default sites.' },
+    id: 'mouldings',
+    title: 'Mouldings & Frames',
+    caption: 'The visible structure, and the one that has to stay straight.',
+    items: [
+      { name: 'Hand-finished Hardwood', tier: 'house', depth: 96, icon: '/marks/hardwood.svg', note: 'Solid timber section, joined with mitred corners, pinned and filled. Available in oak, mahogany and local hardwood.' },
+      { name: 'Gesso & Gilded', tier: 'select', depth: 88, icon: '/marks/gilded.svg', note: 'Traditional gesso build-up, bole underlay and gold leaf, burnished by hand for depth.' },
+      { name: 'Metal Section', tier: 'house', depth: 84, icon: '/marks/metal.svg', note: 'Anodised aluminium profiles — the slimmest sight line we offer, and the most stable in humid rooms.' },
+      { name: 'Deep Shadow Box', tier: 'premium', depth: 90, icon: '/marks/shadowbox.svg', note: 'Built for objects with real depth: medals, garments, textiles, cast sculptures. Interior lining to your colour.' },
+      { name: 'Floating Mount', tier: 'premium', depth: 86, icon: '/marks/floating.svg', note: 'The artwork sits visibly clear of the mount on archival risers — for canvas, board and paper alike.' },
+      { name: 'Restoration Moulding', tier: 'select', depth: 78, icon: '/marks/restoration.svg', note: 'Matched or replicated profiles for existing frames, so a new piece can sit beside an old one without a seam.' },
     ],
   },
   {
-    id: 'styling',
-    title: 'UI Systems & Styling',
-    caption: 'Design engineering, not decoration.',
-    skills: [
-      { name: 'Tailwind CSS', tier: 'core', depth: 93, icon: '/marks/tailwind.svg', note: 'Token pipelines, theme plugins, and the config discipline that keeps a design system honest.' },
-      { name: 'CSS Architecture', tier: 'core', depth: 90, icon: '/marks/css.svg', note: 'Cascade layers, container queries, custom properties as an API surface, subgrid.' },
-      { name: 'Framer Motion', tier: 'fluent', depth: 82, icon: '/marks/framer.svg', note: 'Layout animations, shared element transitions, gesture & scroll choreography.' },
-      { name: 'Radix / Headless UI', tier: 'fluent', depth: 80, icon: '/marks/radix.svg', note: 'Accessible primitives wired into a typed component library.' },
-      { name: 'Storybook', tier: 'working', depth: 68, icon: '/marks/storybook.svg', note: 'Component contracts, visual regression, docs as a deliverable.' },
+    id: 'glazing',
+    title: 'Glazing',
+    caption: 'What stands between your work and the light.',
+    items: [
+      { name: 'Museum Glass', tier: 'select', depth: 92, icon: '/marks/museumglass.svg', note: 'Abrasion-resistant, non-reflective coating on both faces and 99% UV filtering. The choice for anything on paper you intend to keep.' },
+      { name: 'UV-Filtered Clear', tier: 'premium', depth: 88, icon: '/marks/uvclear.svg', note: 'Roughly 99% UV block with full clarity — the sensible middle ground for sunlight-facing walls.' },
+      { name: 'Standard Clear', tier: 'house', depth: 70, icon: '/marks/clear.svg', note: 'Clean float glass. Correct for posters and pieces that will be re-framed later.' },
+      { name: 'Acrylic Glazing', tier: 'premium', depth: 82, icon: '/marks/acrylic.svg', note: 'Lightweight, shatter-resistant and safer to ship. Recommended above A1 size or for children\u2019s rooms.' },
+      { name: 'Anti-Reflective Etched', tier: 'premium', depth: 80, icon: '/marks/antireflective.svg', note: 'Reduces reflections for pieces hung in bright galleries where the artwork must be seen, not the room.' },
+      { name: 'No Glazing', tier: 'house', depth: 74, icon: '/marks/noglazing.svg', note: 'For oils, acrylics on canvas and textiles — these surfaces need to breathe and should never be sealed behind glass.' },
     ],
   },
   {
-    id: 'graphics',
-    title: 'Graphics & Real-time',
-    caption: 'Pixels on a deadline.',
-    skills: [
-      { name: 'Three.js', tier: 'core', depth: 88, icon: '/marks/three.svg', note: 'Custom shaders, instanced geometry, post-processing, instancing at 60fps on mid-tier phones.' },
-      { name: 'WebGL / GLSL', tier: 'core', depth: 85, icon: '/marks/webgl.svg', note: 'Hand-written vertex + fragment shaders, SDF rendering, noise fields, GPU particles.' },
-      { name: 'Canvas 2D', tier: 'fluent', depth: 84, icon: '/marks/canvas.svg', note: 'Before/after WebGL: the fastest path to a bespoke visual that still ships.' },
-      { name: 'WebGPU', tier: 'working', depth: 58, icon: '/marks/webgl.svg', note: 'Compute passes and render pipelines — currently in production trials.' },
+    id: 'mounts',
+    title: 'Mounts & Backing',
+    caption: 'The invisible layer that actually protects the work.',
+    items: [
+      { name: 'Conservation Board', tier: 'select', depth: 94, icon: '/marks/conservation.svg', note: 'Cotton-rag, lignin-free board with a pH-neutral face. It will not yellow, and it will not bleed into your artwork.' },
+      { name: 'Alpha-Cellulose Mount', tier: 'premium', depth: 88, icon: '/marks/alphacellulose.svg', note: 'Purer than standard board and cheaper than cotton rag — the sweet spot for most commissions.' },
+      { name: 'Acid-Free Standard Board', tier: 'house', depth: 78, icon: '/marks/acidfree.svg', note: 'Colour-fast mount board, appropriate for everyday framing where the paper is not archival.' },
+      { name: 'Moisture Barrier', tier: 'premium', depth: 84, icon: '/marks/moisture.svg', note: 'A sealed foil layer behind the artwork so damp moves around the frame rather than through it.' },
+      { name: 'Stainless Hanging Method', tier: 'select', depth: 90, icon: '/marks/stainless.svg', note: 'Hinged with Japanese paper and starch paste, or stainless pins through existing holes — never pressure-sensitive tape.' },
+      { name: 'Fluted & Foam Board', tier: 'house', depth: 72, icon: '/marks/fluted.svg', note: 'Dimensional backing for rigid mounting of photographs and open-edition prints on board.' },
     ],
   },
   {
-    id: 'data',
-    title: 'Backend & Data',
-    caption: 'A framework without a backend is a demo.',
-    skills: [
-      { name: 'Node.js', tier: 'core', depth: 91, icon: '/marks/node.svg', note: 'Streams, worker threads, backpressure, profiler-led optimisation.' },
-      { name: 'PostgreSQL', tier: 'fluent', depth: 80, icon: '/marks/postgres.svg', note: 'Query planning, indexing strategy, migrations that do not lock your table.' },
-      { name: 'Prisma / Drizzle', tier: 'fluent', depth: 82, icon: '/marks/drizzle.svg', note: 'Typed data layers with migrations wired into CI.' },
-      { name: 'tRPC / GraphQL', tier: 'fluent', depth: 79, icon: '/marks/graphql.svg', note: 'End-to-end types, batching, and cache normalisation.' },
-      { name: 'Redis', tier: 'working', depth: 70, icon: '/marks/redis.svg', note: 'Caching layers, rate limiting, pub/sub fan-out.' },
-    ],
-  },
-  {
-    id: 'platform',
-    title: 'Platform & Tooling',
-    caption: 'How it gets to production.',
-    skills: [
-      { name: 'Vite', tier: 'core', depth: 87, icon: '/marks/vite.svg', note: 'Custom plugins, transform pipelines, HMR for non-standard file types.' },
-      { name: 'Docker', tier: 'fluent', depth: 78, icon: '/marks/docker.svg', note: 'Multi-stage builds, reproducible images, small layers.' },
-      { name: 'CI/CD', tier: 'fluent', depth: 81, icon: '/marks/github.svg', note: 'GitHub Actions, preview environments, automated visual + a11y gates.' },
-      { name: 'Playwright', tier: 'fluent', depth: 83, icon: '/marks/playwright.svg', note: 'End-to-end suites that are trusted enough to actually block a merge.' },
-      { name: 'Performance Auditing', tier: 'core', depth: 89, icon: '/marks/lighthouse.svg', note: 'Lighthouse, WebPageTest, INP/LCP forensics, bundle budgets enforced in CI.' },
+    id: 'finishing',
+    title: 'Finishing & Fitting',
+    caption: 'Everything you only notice when it is missing.',
+    items: [
+      { name: 'Mitred & Cross-Nailed', tier: 'house', depth: 92, icon: '/marks/mitred.svg', note: 'Corners cut on a calibrated mitre saw, glued, pinned and filled — no gaps that open with the seasons.' },
+      { name: 'Dust Sealing', tier: 'house', depth: 86, icon: '/marks/dustsealed.svg', note: 'Tape-sealed backing so insects and dust cannot reach the artwork from behind.' },
+      { name: 'Anti-Slip Felt Pads', tier: 'house', depth: 84, icon: '/marks/feltpads.svg', note: 'Felt on every bottom edge, so your walls and paintwork are never the casualty of moving it.' },
+      { name: 'D-Rings & Hanging Kit', tier: 'house', depth: 88, icon: '/marks/hangingkit.svg', note: 'Load-rated rings and a wall fixing matched to your wall type, with instructions. Nothing leaves the studio unfixable.' },
+      { name: 'Hand-Painted Accent Line', tier: 'select', depth: 76, icon: '/marks/accentline.svg', note: 'A painted slip between mount and frame when a plain gap would feel unresolved.' },
+      { name: 'Printed Plaque', tier: 'premium', depth: 70, icon: '/marks/plaque.svg', note: 'Brushed metal or engraved plate with a title, name or date, fixed to the frame face.' },
     ],
   },
 ];
 
 /* -------------------------------------------------------------------------- */
-/*  PROJECTS — each one carries its own accent colour                         */
+/*  THE GALLERY — showcase pieces and their stories                          */
 /* -------------------------------------------------------------------------- */
 
 export type ProjectImage = {
-  /** Path under /public, e.g. "/work/atlas-cover.png". */
+  /** Path under /public, e.g. "/work/comm-photograph-cover.svg". */
   src: string;
-  /** Describe what is IN the image — this is read aloud by screen readers. */
+  /** Describe what is IN the image — read aloud by screen readers. */
   alt: string;
+  /** Override the default gallery preview ratio when matching a supplied photo. */
+  previewRatio?: string;
   caption?: string;
   /**
-   * `screen` — UI screenshot. Rendered object-contain so nothing is cropped.
-   * `scene`  — render / photo / visual. Rendered object-cover to fill the frame.
+   * `photo`  — product/frame photography. Rendered object-cover, fills frame.
+   * `detail` — close-up of a joint, mount or texture. Also object-cover.
+   * `plane`  — flat artwork, plan or diagram. object-contain, never cropped.
    */
-  kind: 'screen' | 'scene';
+  kind: 'photo' | 'detail' | 'plane';
+  /** Preserve source ratio when a supplied photograph is portrait-oriented. */
+  naturalAspect?: boolean;
 };
 
 export type Project = {
   slug: string;
   index: string;
   title: string;
+  /** The piece type, e.g. "Photograph". */
+  category: string;
   tagline: string;
   year: string;
   role: string;
-  /** The one-line result. Numbers beat adjectives. */
+  /** One line on what was made and what governed the decision. */
   outcome: string;
+  /** Materials used — shown as chips. */
   stack: string[];
-  /** rgb triplet, e.g. "91 140 255" — drives the accent while this card is hovered. */
+  /** rgb triplet, e.g. "91 140 255" — tints the page while this card is hovered. */
   accent: [string, string, string];
-  /**
-   * Cover image, shown as the thumbnail in the collapsed row and as the large
-   * figure in the expanded case study. Create this file first; see README.
-   */
+  /** Price guide. Keep honest or remove. */
+  from: string;
   cover: ProjectImage;
-  /** Additional screenshots for the case study gallery. */
   gallery: ProjectImage[];
-  problem: string;
+  brief: string;
   approach: string;
   highlights: string[];
-  metrics: { value: string; label: string }[];
+  specs: { value: string; label: string }[];
   links: { label: string; href: string }[];
 };
 
 export const projects: Project[] = [
   {
-    slug: 'atlas',
+    slug: 'upsa-src-annual-dinner',
     index: '01',
-    title: 'Atlas UI',
-    tagline: 'A headless design system with a compiler',
+    title: 'UPSA SRC Annual Dinner',
+    category: 'Event portrait',
+    tagline: 'A keepsake portrait celebrating the people behind the event',
     year: '2025',
-    role: 'Creator & maintainer',
-    outcome: 'Reduced new-feature UI build time by 64% across four product teams.',
-    stack: ['React', 'TypeScript', 'Tailwind', 'Vite'],
+    role: 'AziBK featured work',
+    outcome: 'UPSA SRC Annual Dinner attendees recognized as beneficiaries of the AziBK project.',
+    stack: ['Event photography', 'UPSA SRC', 'AziBK showcase'],
     accent: ['91', '140', '255'],
+    from: 'Request a quote',
     cover: {
-      src: '/work/atlas-cover.svg',
-      alt: 'Atlas UI component gallery showing button variants, input states and dark mode tokens',
-      caption: 'The generated component gallery — every variant rendered from source types.',
-      kind: 'screen',
+      src: '/marks/upsa.png',
+      alt: 'Four UPSA SRC representatives standing together at the UPSA SRC Annual Dinner, with event branding behind them',
+      previewRatio: '16 / 9',
+      caption: 'UPSA SRC Annual Dinner — beneficiaries of the AziBK project.',
+      kind: 'photo',
     },
-    gallery: [
-      {
-        src: '/work/atlas-codemod.svg',
-        alt: 'Terminal output of the Atlas codemod migrating 1,400 legacy call-sites',
-        caption: 'The codemod run that migrated 1,400 call-sites without a manual edit.',
-        kind: 'screen',
-      },
-      {
-        src: '/work/atlas-tokens.svg',
-        alt: 'The Atlas token pipeline diagram from declaration through compile to component API',
-        caption: 'Tokens declared once, compiled into a typed API.',
-        kind: 'scene',
-      },
-    ],
-    problem:
-      'Four teams, four component folders, four subtly different buttons. Every new feature re-litigated spacing, focus states and dark mode.',
+    gallery: [],
+
+    brief:
+      'A group portrait from the UPSA SRC Annual Dinner featuring individuals identified as beneficiaries of the AziBK project. The photograph celebrates their contribution and connection to the project.',
     approach:
-      'I wrote the styling layer as a compile step. Tokens are declared once, components consume them through a typed API, and a build-time codemod rewrites legacy call-sites so adoption never required a big-bang migration.',
+      'This supplied photograph is shown as a real project image, not as a claim that the people pictured commissioned a particular frame. If you would like a print like this framed for your home, office or organisation, send the image and dimensions with your enquiry.',
     highlights: [
-      'Fully typed variant API — invalid prop combinations fail at compile time, not in review.',
-      'Codemod migrated 1,400 legacy call-sites with zero manual edits.',
-      'Accessibility gates in CI: axe + keyboard-trap tests block the merge.',
+      'Actual event photograph supplied for the AziBK showcase.',
+      'Suitable for a framed group portrait, office display or event keepsake.',
+      'Frame, mount and glazing options can be discussed when requesting a quote.',
     ],
-    metrics: [
-      { value: '64%', label: 'faster UI builds' },
-      { value: '1.4k', label: 'call-sites migrated' },
-      { value: '100', label: 'Lighthouse a11y' },
+    specs: [
+      { value: 'UPSA', label: 'event' },
+      { value: 'SRC', label: 'community' },
+      { value: 'AziBK', label: 'framing brand' },
     ],
-    links: [{ label: 'Repository', href: 'https://github.com/Debuck1718' }],
+    links: [],
   },
   {
-    slug: 'flux-engine',
+    slug: 'concept-photograph',
     index: '02',
-    title: 'Flux Engine',
-    tagline: 'A WebGL particle runtime for the browser',
-    year: '2024',
-    role: 'Architect',
-    outcome: '1.2M particles at a locked 60fps on a three-year-old laptop GPU.',
-    stack: ['WebGL2', 'GLSL', 'Three.js', 'TypeScript'],
+    title: 'Archival Photograph — concept',
+    category: 'Concept example',
+    tagline: 'An example of how an archival print could be framed',
+    year: 'Concept',
+    role: 'Illustrative mockup — not a completed commission',
+    outcome: 'Museum glass and a cotton-rag mount are options to discuss for a real print.',
+    stack: ['Museum Glass option', 'Cotton-rag mount option', 'Oak section concept'],
     accent: ['255', '122', '89'],
+    from: 'Request a quote',
     cover: {
-      src: '/work/flux-cover.svg',
-      alt: 'A dense orange particle swarm curving through dark space, rendered live in the browser',
-      caption: '1.2M particles in flight — a single instanced draw call.',
-      kind: 'scene',
+      src: '/work/comm-photograph-cover.svg',
+      alt: 'Illustrative mockup of a photograph in a pale oak frame; this is not a photograph of a completed AziBK commission',
+      caption: 'Concept mockup only — replace with a photograph of a real completed frame.',
+      kind: 'photo',
     },
     gallery: [
       {
-        src: '/work/flux-shader.svg',
-        alt: 'The fragment shader source for the particle simulation with ping-pong framebuffers',
-        caption: 'Simulation state lives in two textures; the CPU only sets uniforms.',
-        kind: 'screen',
-      },
-      {
-        src: '/work/flux-profiler.svg',
-        alt: 'Frame timing graph holding a steady 16 millisecond budget on a mid-tier laptop GPU',
-        caption: 'Frame budget held at 60fps on three-year-old hardware.',
-        kind: 'screen',
+        src: '/work/comm-photograph-detail.svg',
+        alt: 'Illustrative close-up of a frame corner, not a photograph of a completed AziBK commission',
+        caption: 'Illustrative mockup only.',
+        kind: 'detail',
       },
     ],
-    problem:
-      'The visual target for a product launch needed swarms of moving particles — and the existing DOM/CSS approach collapsed at roughly 4,000 elements.',
+    brief:
+      'An illustrative example showing how a photograph might be framed. It is not a record of a completed commission.',
     approach:
-      'I moved everything onto the GPU. Simulation runs in a fragment shader with ping-pong framebuffers; the CPU only uploads initial state and a handful of uniforms per frame. Geometry is a single instanced draw call.',
+      'The pictured frame is a generated mockup. Share your print size, where it will hang, and the finish you like; AziBK can then recommend materials and provide an accurate quote.',
     highlights: [
-      'Zero CPU-side particle updates — state lives entirely in two textures.',
-      'Adaptive quality controller drops simulation resolution instead of framerate.',
-      'Deterministic given a seed, so the marketing capture and the live site match exactly.',
+      'Museum glass is an optional upgrade for light-exposed photographs.',
+      'Cotton-rag mount board is an option for conservation-minded framing.',
+      'Final materials and pricing depend on the real piece and its dimensions.',
     ],
-    metrics: [
-      { value: '1.2M', label: 'live particles' },
-      { value: '60fps', label: 'locked on mid-tier' },
-      { value: '1', label: 'draw call' },
+    specs: [
+      { value: 'Concept', label: 'example only' },
+      { value: 'Custom', label: 'made to measure' },
+      { value: 'Quote', label: 'based on your piece' },
     ],
-    links: [{ label: 'Live demo', href: 'https://github.com/Debuck1718' }],
+    links: [],
   },
   {
-    slug: 'halo',
+    slug: 'comm-abstract',
+    index: '02',
+    title: 'Floating Canvas — concept',
+    category: 'Concept example',
+    tagline: 'An example of a canvas floated inside a box frame',
+    year: 'Concept',
+    role: 'Illustrative mockup — not a completed commission',
+    outcome: 'A floating frame can show the canvas edge with a deliberate shadow gap.',
+    stack: ['Floating frame concept', 'Deep box option', 'No glazing option'],
+    accent: ['255', '122', '89'],
+    from: 'from GH\u20b5 2,100',
+    cover: {
+      src: '/work/comm-abstract-cover.svg',
+      alt: 'Illustrative mockup of an abstract canvas in a warm-toned floating frame; not a completed AziBK commission',
+      caption: 'Concept mockup only — replace with a photograph of a real completed frame.',
+      kind: 'photo',
+    },
+    gallery: [
+      {
+        src: '/work/comm-abstract-detail.svg',
+        alt: 'Close-up of the shadow gap between the edge of the canvas and the frame',
+        caption: 'The gap is set with archival risers, so air moves freely behind the canvas.',
+        kind: 'detail',
+      },
+      {
+        src: '/work/comm-abstract-elevation.svg',
+        alt: 'Scale drawing of the floating frame showing the moulding profile and shadow gap',
+        caption: 'Every oversized frame is drawn to scale before a single cut is made.',
+        kind: 'plane',
+      },
+    ],
+    brief:
+      'Illustrative example of a large canvas where the artist may want the painted edges to remain visible. This is not a completed AziBK commission.',
+    approach:
+      'The generated image demonstrates one possible floating-frame look. Actual framing, hanging hardware and dimensions would be specified from the real canvas and wall before quoting.',
+    highlights: [
+      'French cleat hanging system — the whole 1.6m piece lifts off for transport.',
+      'Canvas set on archival risers with an even 8mm shadow gap all round.',
+      'Deliberately unglazed. Oils and acrylics need airflow; sealing them causes bloom.',
+    ],
+    specs: [
+      { value: '1.6m', label: 'longest edge' },
+      { value: '8mm', label: 'shadow gap' },
+      { value: 'No glass', label: 'by design' },
+    ],
+    links: [],
+  },
+  {
+    slug: 'comm-certificate',
     index: '03',
-    title: 'Halo',
-    tagline: 'Edge-rendered commerce storefront',
-    year: '2024',
-    role: 'Lead engineer',
-    outcome: 'LCP went from 4.1s to 0.9s; conversion up 23% in the following quarter.',
-    stack: ['Next.js', 'Edge Runtime', 'Redis', 'PostgreSQL'],
+    title: 'Certificate Frame — concept',
+    category: 'Concept example',
+    tagline: 'An example of a certificate with a layered mount',
+    year: 'Concept',
+    role: 'Illustrative mockup — not a completed commission',
+    outcome: 'A double mount can add depth while leaving a certificate visible.',
+    stack: ['UV-Filtered Clear', 'Alpha-cellulose mount', 'Metal section'],
     accent: ['126', '231', '163'],
+    from: 'from GH\u20b5 780',
     cover: {
-      src: '/work/halo-cover.svg',
-      alt: 'The edge-rendered storefront product grid with streamed skeleton placeholders',
-      caption: 'Streamed skeletons above the fold; every section resumable.',
-      kind: 'screen',
+      src: '/work/comm-certificate-cover.svg',
+      alt: 'A framed certificate with a two-tone mount and a thin dark metal frame',
+      caption: 'Double mount reveal in two tones, sized so the seal sits clear of the edge.',
+      kind: 'photo',
     },
     gallery: [
       {
-        src: '/work/halo-lighthouse.svg',
-        alt: 'Lighthouse report showing 0.9 second largest contentful paint and a perfect performance score',
-        caption: 'LCP 4.1s → 0.9s, verified on the production origin.',
-        kind: 'screen',
-      },
-      {
-        src: '/work/halo-architecture.svg',
-        alt: 'Architecture diagram of the edge cache, tag invalidation and origin database',
-        caption: 'Tag-based invalidation keeps every region under two seconds stale.',
-        kind: 'scene',
+        src: '/work/comm-certificate-detail.svg',
+        alt: 'Close-up of the double mount reveal showing the inner and outer board tones',
+        caption: 'The inner reveal is cut to the seal, so the framing never crops the document.',
+        kind: 'detail',
       },
     ],
-    problem:
-      'A storefront rendering every product grid on the origin server, in one region, against a database that buckled during every campaign.',
+    brief:
+      'A certificate with an embossed seal near the margin, to be hung in a bright office corridor for decades. The seal had to remain fully visible and the document could not be trimmed.',
     approach:
-      'Moved the render to edge functions with streamed skeletons, pushed the catalogue into a distributed cache with tag-based invalidation, and made every route resumable so a slow downstream never blocks first paint.',
+      'We cut a double mount with a two-tone reveal: the outer board frames the whole sheet, the inner reveal aligns to the seal. The document is held with edge mounts rather than hinges, so nothing touches the printed surface. Aluminium section keeps the sight line thin and stays flat in an air-conditioned corridor.',
     highlights: [
-      'Streaming SSR with per-section error boundaries — one bad widget no longer blanks the page.',
-      'Cache tag invalidation so a price change propagates globally in under two seconds.',
-      'Bundle budget enforced in CI; the build fails if the entry chunk grows past 90kB.',
+      'Edge-mounted, not hinged — nothing adheres to the document surface.',
+      'Alpha-cellulose board: purer than standard, far cheaper than cotton rag.',
+      'Aluminium section holds straight where a thin timber frame would bow.',
     ],
-    metrics: [
-      { value: '0.9s', label: 'LCP, was 4.1s' },
-      { value: '+23%', label: 'conversion' },
-      { value: '99.98%', label: 'uptime through peaks' },
+    specs: [
+      { value: 'A3', label: 'frame size' },
+      { value: '2', label: 'mount layers' },
+      { value: 'Flat', label: 'stays straight' },
     ],
-    links: [{ label: 'Case study', href: 'https://github.com/Debuck1718' }],
+    links: [],
   },
   {
-    slug: 'synapse',
+    slug: 'comm-memorabilia',
     index: '04',
-    title: 'Synapse',
-    tagline: 'Real-time collaborative canvas',
-    year: '2023',
-    role: 'Founding engineer',
-    outcome: 'CRDT-backed editing with sub-30ms perceived latency across continents.',
-    stack: ['TypeScript', 'WebRTC', 'CRDT', 'Canvas 2D'],
+    title: 'Memorabilia Shadow Box — concept',
+    category: 'Concept example',
+    tagline: 'An example of how keepsakes could be arranged in a shadow box',
+    year: 'Concept',
+    role: 'Illustrative mockup — not a completed commission',
+    outcome: 'A shadow box can display keepsakes without fixing through the objects.',
+    stack: ['Deep shadow box', 'Acrylic glazing', 'Lined interior'],
     accent: ['192', '132', '252'],
+    from: 'from GH\u20b5 1,650',
     cover: {
-      src: '/work/synapse-cover.svg',
-      alt: 'A collaborative canvas with three coloured cursors editing the same diagram simultaneously',
-      caption: 'Three editors, one document, no conflict UI.',
-      kind: 'screen',
+      src: '/work/comm-memorabilia-cover.svg',
+      alt: 'A deep shadow box frame holding medals, ribbons and a small photograph',
+      caption: 'Lined interior in a deep subframe — the objects sit inside, not on a backing sheet.',
+      kind: 'photo',
     },
     gallery: [
       {
-        src: '/work/synapse-offline.svg',
-        alt: 'A network panel showing an offline period followed by a clean CRDT merge on reconnect',
-        caption: 'Offline for 40 seconds, reconnected with zero lost strokes.',
-        kind: 'screen',
+        src: '/work/comm-memorabilia-detail.svg',
+        alt: 'Close-up showing how a medal is held by a concealed mount rather than adhesive',
+        caption: 'Every fixing is concealed behind the object, and none of them are adhesive.',
+        kind: 'detail',
       },
       {
-        src: '/work/synapse-crdt.svg',
-        alt: 'Diagram of the CRDT operation log merging two divergent document states',
-        caption: 'Transport-agnostic document core, swapped WebRTC for a relay.',
-        kind: 'scene',
+        src: '/work/comm-memorabilia-plan.svg',
+        alt: 'Layout plan showing the arranged position of each object in the case',
+        caption: 'The arrangement is drawn and agreed before anything is fixed in place.',
+        kind: 'plane',
       },
     ],
-    problem:
-      'Multiple people editing the same spatial canvas at once, over flaky connections, with no central authority to arbitrate conflicts.',
+    brief:
+      'Medals, service ribbons and a portrait photograph, to be kept together in one piece that could be carried between houses. Nothing could be pinned through, glued, or polished in a way that risked the originals.',
     approach:
-      'Built a custom CRDT layer over a WebRTC mesh with a relay fallback. The renderer draws from the merged document each frame, interpolating between remote states so motion reads as continuous rather than stepped.',
+      'A deep shadow box with a lined subframe, so the objects sit within real depth rather than against a flat sheet. Each medal is held by a formed acrylic cradle concealed behind it, and the ribbons are laid over an inert board. Acrylic glazing because it is light and shatter-resistant, since the piece was built to be moved.',
     highlights: [
-      'Offline-first: reconnect merges cleanly, no lost strokes, no conflict UI.',
-      'Renderer reconciles 10k+ objects with dirty-rect redraws only.',
-      'Transport-agnostic core — swapped WebRTC for a relay without touching document logic.',
+      'Concealed acrylic cradles — every object is held without adhesive or pin holes.',
+      'Acrylic rather than glass: the case was designed to be transported and rehung.',
+      'Subframe interior lined to the customer\u2019s colour, matched against the photo.',
     ],
-    metrics: [
-      { value: '<30ms', label: 'perceived latency' },
-      { value: '10k+', label: 'objects per canvas' },
-      { value: '0', label: 'lost edits offline' },
+    specs: [
+      { value: '60mm', label: 'interior depth' },
+      { value: '9', label: 'objects mounted' },
+      { value: '0', label: 'adhesive fixes' },
     ],
-    links: [{ label: 'Repository', href: 'https://github.com/Debuck1718' }],
+    links: [],
   },
   {
-    slug: 'prism',
+    slug: 'comm-fabric',
     index: '05',
-    title: 'Prism',
-    tagline: 'Documentation framework for design systems',
-    year: '2023',
-    role: 'Creator',
-    outcome: 'Docs site now deploys in 14s and is written by designers, not engineers.',
-    stack: ['Astro', 'MDX', 'TypeScript', 'CI/CD'],
+    title: 'Textile Display — concept',
+    category: 'Concept example',
+    tagline: 'An example of a textile displayed within a deep frame',
+    year: 'Concept',
+    role: 'Illustrative mockup — not a completed commission',
+    outcome: 'Textiles need a support method chosen for the specific fabric and its condition.',
+    stack: ['Cotton-rag mount', 'Deep shadow box', 'UV glass'],
     accent: ['252', '211', '77'],
+    from: 'from GH\u20b5 1,900',
     cover: {
-      src: '/work/prism-cover.svg',
-      alt: 'Generated documentation page with a live editable playground beside a props table',
-      caption: 'Props tables and playgrounds generated from component source.',
-      kind: 'screen',
+      src: '/work/comm-fabric-cover.svg',
+      alt: 'A full-length woven kente cloth framed flat inside a deep dark frame',
+      caption: 'Held flat by tension alone — no stitches, no pins, no adhesive.',
+      kind: 'photo',
     },
     gallery: [
       {
-        src: '/work/prism-playground.svg',
-        alt: 'An isolated iframe playground rendering a live component with editable controls',
-        caption: 'Every example is executable, hydrated only where needed.',
-        kind: 'screen',
+        src: '/work/comm-fabric-detail.svg',
+        alt: 'Close-up of a hand-stitched edge channel holding the cloth under tension',
+        caption: 'A stitched edge channel carries the tension, hidden behind the frame lip.',
+        kind: 'detail',
+      },
+      {
+        src: '/work/comm-fabric-section.svg',
+        alt: 'Cross-section drawing showing how the cloth is tensioned clear of the mount board',
+        caption: 'The cloth sits clear of the board so air moves behind the weave.',
+        kind: 'plane',
       },
     ],
-    problem:
-      'The docs were a hand-maintained React app. Every component change meant an engineer editing markup, and they drifted within weeks.',
+    brief:
+      'A full-length kente cloth with real weight and open weave, to be displayed flat. It had to remain intact — meaning no stitching through the fabric, no adhesive, and no holes where the weave could later tear.',
     approach:
-      'Inverted it: components are the source of truth. Prism reads their types and stories at build time and generates props tables, usage snippets and live playgrounds automatically. Designers write prose; the framework writes the reference.',
+      'We built a tension mount: the cloth is held by a stitched edge channel that wraps the back of a rigid board under even tension, taking the load across the full length rather than at a few points. It sits clear of the mount board so air moves behind the weave, behind UV glass in a deep frame. Every stitch is in the channel and reversible.',
     highlights: [
-      'Props tables generated from source types — documentation cannot go stale.',
-      'Every example is executable and rendered in an isolated iframe.',
-      'Zero-JS by default; interactivity hydrates only where a playground exists.',
+      'Hand-stitched edge channel carries the load evenly — no focal points to tear.',
+      'Cloth held clear of the board, allowing airflow through an open weave.',
+      'Fully reversible: the cloth can be removed with nothing but the stitches undone.',
     ],
-    metrics: [
-      { value: '14s', label: 'full deploy' },
-      { value: '0', label: 'manual prop tables' },
-      { value: '0kb', label: 'default JS' },
+    specs: [
+      { value: '2.4m', label: 'cloth length' },
+      { value: 'UV', label: 'glass type' },
+      { value: '0', label: 'pins used' },
     ],
-    links: [{ label: 'Repository', href: 'https://github.com/Debuck1718' }],
+    links: [],
   },
 ];
 
-
 /* -------------------------------------------------------------------------- */
-/*  PROCESS                                                                   */
+/*  HOW WE WORK                                                               */
 /* -------------------------------------------------------------------------- */
 
 export type ProcessStep = {
@@ -422,38 +485,88 @@ export type ProcessStep = {
 export const processSteps: ProcessStep[] = [
   {
     step: '01',
-    title: 'Interrogate the constraint',
-    body: 'Before any abstraction, I find out what is actually slow, actually duplicated, actually painful. Usually it is not what the brief says.',
-    deliverable: 'A written diagnosis with measurements attached.',
+    title: 'Measure the piece, and the wall',
+    body: 'We look at what is being framed — the paper, the pigment, the depth, the weight — and where it will actually hang. Light direction and humidity decide more of the specification than taste does.',
+    deliverable: 'A written specification and a firm quote.',
   },
   {
     step: '02',
-    title: 'Design the contract',
-    body: 'The API comes before the implementation. I sketch how a developer will call this thing, and I throw the sketch away until calling it feels obvious.',
-    deliverable: 'Type signatures and a usage sketch, reviewed before code.',
+    title: 'Choose materials against the risk',
+    body: 'Museum glass or UV clear. Cotton rag or alpha-cellulose. Glazed, or left to breathe. Each choice is a trade-off, so we explain what you are buying and what happens if you skip it.',
+    deliverable: 'Moulding, glazing and mount samples in hand.',
   },
   {
     step: '03',
-    title: 'Build the boring core',
-    body: 'The unglamorous part: the build step, the error states, the edge cases, the tests. This is the ninety percent that determines whether a framework survives contact with a team.',
-    deliverable: 'A working vertical slice with CI gates.',
+    title: 'Cut, join and finish by hand',
+    body: 'The quiet ninety percent. Corners mitred, glued, pinned and filled. The mount cut with a hand-torn or bevelled edge. Everything dust-sealed before it leaves the bench.',
+    deliverable: 'The finished frame, fitted and checked.',
   },
   {
     step: '04',
-    title: 'Adopt, then remove myself',
-    body: 'A framework nobody uses is a hobby. I migrate real call-sites, write the docs, and then make sure the team no longer needs me to change them.',
-    deliverable: 'Migration path, docs, and a handover that sticks.',
+    title: 'Hang it, then leave it alone',
+    body: 'We supply the right fixing for your wall and show you how it goes up. After that the frame should disappear — you should only ever notice the picture.',
+    deliverable: 'Load-rated hanging kit and fitting instructions.',
   },
 ];
+
+/* -------------------------------------------------------------------------- */
+/*  ORDERING                                                                  */
+/* -------------------------------------------------------------------------- */
+
+export type OrderStep = { step: string; title: string; body: string };
+
+export const orderSteps: OrderStep[] = [
+  {
+    step: '01',
+    title: 'Send us the details',
+    body: 'Tell us what you have, roughly how big it is, and how you would like it to look. A photo from your phone is enough to start.',
+  },
+  {
+    step: '02',
+    title: 'Get a quote in 24 hours',
+    body: 'We come back with a specification and a firm price. No obligation, and no surprises later in the process.',
+  },
+  {
+    step: '03',
+    title: 'Approve, then we build',
+    body: 'Once you approve, the piece goes on the bench. Typical turnaround is two weeks; we will tell you if it will be longer.',
+  },
+  {
+    step: '04',
+    title: 'Collect or have it delivered',
+    body: 'Collect from the studio, or we arrange delivery and fit. Rush turnaround is available on request.',
+  },
+];
+
+/** Options that populate the order form dropdowns. */
+export const orderOptions = {
+  itemTypes: [
+    'Photograph / print',
+    'Painting (canvas)',
+    'Painting (paper)',
+    'Certificate / document',
+    'Textile / fabric',
+    'Memorabilia / 3D object',
+    'Mirror',
+    'Something else',
+  ],
+  sizes: ['Small (under A4)', 'Medium (A3–A2)', 'Large (A1)', 'Oversized (over A1)', 'Not sure'],
+  materials: [
+    'Best protection (museum glass + conservation)',
+    'Balance of cost and protection',
+    'Simple and affordable',
+    'Not sure — please advise',
+  ],
+};
 
 /* -------------------------------------------------------------------------- */
 /*  NAVIGATION                                                                */
 /* -------------------------------------------------------------------------- */
 
 export const navLinks = [
-  { id: 'work', label: 'Work', index: '01' },
-  { id: 'arsenal', label: 'Arsenal', index: '02' },
+  { id: 'gallery', label: 'Gallery', index: '01' },
+  { id: 'materials', label: 'Materials', index: '02' },
   { id: 'process', label: 'Process', index: '03' },
   { id: 'about', label: 'About', index: '04' },
-  { id: 'contact', label: 'Contact', index: '05' },
+  { id: 'order', label: 'Order', index: '05' },
 ];

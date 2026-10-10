@@ -1,7 +1,7 @@
 // Captures the page section by section. Screenshots are full-viewport captures
 // taken after an explicit scroll — `scrollIntoView` proved unreliable here.
 export default async function run(page) {
-  const sections = ["#work", "#arsenal", "#process", "#about", "#contact"];
+  const sections = ["#gallery", "#materials", "#process", "#about", "#parent", "#order", "#contact"];
   const shots = [];
 
   for (const selector of sections) {

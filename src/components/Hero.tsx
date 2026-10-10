@@ -9,15 +9,19 @@ import { profile } from "@/lib/site";
 /**
  * The hero.
  *
- * Three things are happening here that most portfolio heroes do not do:
+ * Three things are happening here that most small-business heroes do not do:
  *
  * 1. The rotating word is set in a *reserved-width* container measured from the
  *    longest word, so the line never reflows as words swap. Layout thrash on a
- *    loop is the single most common flaw in this pattern.
+ *    loop is the commonest flaw in this pattern.
  * 2. The headline is split into lines that slide up out of an overflow-hidden
  *    mask on mount — a real entrance rather than a fade.
  * 3. The canvas underneath is interactive, not decorative: it reads the live
- *    accent variable so it also reacts to project-card hovers further down.
+ *    accent variable, so it also reacts to gallery hovers further down.
+ *
+ * The copy sets up the commercial position in one line — bespoke, by hand, in
+ * Accra — because a visitor decides in about four seconds whether this is the
+ * kind of studio they would trust with a wedding photograph.
  */
 export function Hero() {
   const [wordIndex, setWordIndex] = useState(0);
@@ -46,7 +50,6 @@ export function Hero() {
     >
       {/* Interactivity hint for assistive tech, since the canvas is decorative. */}
       <p className="sr-only">Interactive particle field. Move the pointer to disturb it.</p>
-
       {/* Interactive particle field */}
       <HeroCanvas />
 
@@ -86,7 +89,7 @@ export function Hero() {
           <h1 className="font-display text-fluid-3xl font-medium leading-[0.92] tracking-tightest">
             <span className="block overflow-hidden pb-[0.06em]">
               <span className="block animate-[hero-rise_1s_cubic-bezier(0.16,1,0.3,1)_both]">
-                I engineer
+                We frame
               </span>
             </span>
             <span className="block overflow-hidden pb-[0.06em]">
@@ -96,8 +99,7 @@ export function Hero() {
                 style={{ minHeight: "1em" }}
               >
                 <span
-                  className="relative inline-block"
-                  style={{ minWidth: `${longest.length}ch` }}
+                  className="relative inline-block w-[8ch] min-w-[8ch] sm:w-[14ch] sm:min-w-[14ch] md:w-[18ch] md:min-w-[18ch]"
                 >
                   {/* Only the active word is visible. The inactive ones are
                       removed from both painting and the accessibility tree, so
@@ -131,12 +133,12 @@ export function Hero() {
           </p>
 
           <div className="mt-12 flex flex-wrap items-center gap-4">
-            <MagneticButton href="#work" variant="solid">
-              View the work
+            <MagneticButton href="#gallery" variant="solid">
+              See the gallery
               <Arrow />
             </MagneticButton>
-            <MagneticButton href="#arsenal" variant="ghost">
-              The arsenal
+            <MagneticButton href="#order" variant="ghost">
+              Order a frame
             </MagneticButton>
           </div>
         </div>
@@ -149,21 +151,21 @@ export function Hero() {
               className="max-w-2xl flex-1"
               speed="slow"
               items={[
-                "React",
-                "Next.js",
-                "TypeScript",
-                "WebGL",
-                "Node",
-                "Tailwind",
-                "Three.js",
-                "PostgreSQL",
-                "Vite",
-                "Playwright",
+                "Bespoke framing",
+                "Conservation mounting",
+                "Museum glass",
+                "Shadow boxes",
+                "Canvas floats",
+                "Textile framing",
+                "Mirrors",
+                "Restoration",
+                "Delivery & fitting",
+                "Accra",
               ]}
             />
 
             <a
-              href="#work"
+              href="#gallery"
               className="group flex shrink-0 items-center gap-3 font-mono text-[0.66rem] uppercase tracking-[0.24em] text-bone-faint transition-colors hover:text-bone"
             >
               Scroll

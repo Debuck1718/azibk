@@ -42,7 +42,7 @@ export function Contact() {
     }
   };
 
-  const words = "Let us build the layer underneath.".split(" ");
+  const words = "Come and see the work in person.".split(" ");
 
   return (
     <section
@@ -63,9 +63,9 @@ export function Contact() {
       <div className="shell relative py-28 md:py-40">
         <div className="mb-10 flex items-start justify-between gap-6">
           <span className="eyebrow">
-            <span className="text-[rgb(var(--accent))]">05</span>
+            <span className="text-[rgb(var(--accent))]">06</span>
             <span className="mx-3 text-ink-line">/</span>
-            Contact
+            Visit or call
           </span>
         </div>
         <div className="hairline mb-16" />
@@ -91,10 +91,9 @@ export function Contact() {
           data-reveal
           className="will-reveal mt-8 max-w-xl text-pretty text-fluid-base text-bone-dim"
         >
-          I am most useful at the start of something structural — a platform
-          that needs to scale, a codebase that needs a design system, or a
-          visual idea that has to run at sixty frames a second. Tell me what is
-          slow or duplicated, and we can go from there.
+          A frame is easier to choose with the mouldings in your hand. Come to the studio to see
+          the materials and the finish, or call if a form is not your thing — we are happy to
+          talk through what you have and what it needs.
         </p>
 
         <div

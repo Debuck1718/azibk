@@ -1,121 +1,77 @@
-// Generates placeholder assets so the site looks correct before real artwork is
-// dropped in. Run: node scripts/generate-placeholders.mjs
+// Generates placeholder artwork so the site looks intentional before real
+// photography is shot. Run: node scripts/generate-placeholders.mjs
 //
-// Both generators write only if the file is absent, so real assets are never
-// overwritten by a later run.
-import { mkdirSync, existsSync, writeFileSync } from "node:fs";
-import { dirname, resolve } from "node:path";
+// Two families of asset:
+//   1. public/marks  — small square icons used by the Materials section.
+//   2. public/work   — a labelled "frame on a wall" mock for each gallery piece.
+//
+// Only writes files that do not exist, so real photography is never overwritten.
+import { mkdirSync, existsSync, writeFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
 
 const root = resolve(process.cwd());
-const marksDir = resolve(root, "public/marks");
-const workDir = resolve(root, "public/work");
-
-mkdirSync(marksDir, { recursive: true });
-mkdirSync(workDir, { recursive: true });
+const marksDir = resolve(root, 'public/marks');
+const workDir = resolve(root, 'public/work');
 
 function write(file, content) {
   if (existsSync(file)) {
-    console.log(`skip   ${file.replace(root + "\\", "")} (exists)`);
+    console.log(`skip   ${file.replace(root, '')}`);
     return false;
   }
   mkdirSync(dirname(file), { recursive: true });
-  writeFileSync(file, content, "utf8");
-  console.log(`write  ${file.replace(root + "\\", "")}`);
+  writeFileSync(file, content, 'utf8');
+  console.log(`write  ${file.replace(root, '')}`);
   return true;
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Tech marks — simple 24x24 monochrome glyphs in the brand-ish shape.       */
-/*  These are deliberately generic stand-ins, not the real trademarks.        */
+/*  1. MATERIAL MARK ICONS                                                    */
+/*  Simple line glyphs — a frame profile, a pane of glass, a mount corner.    */
+/*  Deliberately not brand logos: this is a workshop, not a software stack.   */
 /* -------------------------------------------------------------------------- */
 
-const mark = (body, colour = "#EDEAE4") =>
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="${colour}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${body}</svg>\n`;
+const glyph = (body, colour = '#EDEAE4') =>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="${colour}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${body}</svg>\n`;
+
+/** A nested frame outline. */
+const frame = (inset = 3) =>
+  glyph(
+    `<rect x="${inset}" y="${inset}" width="${24 - inset * 2}" height="${24 - inset * 2}" rx="1.5"/>` +
+      `<rect x="${inset + 4}" y="${inset + 4}" width="${24 - (inset + 4) * 2}" height="${24 - (inset + 4) * 2}" rx="0.5" opacity="0.5"/>`,
+  );
 
 const MARKS = {
-  react: mark(
-    '<circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/>',
-    "#61DAFB",
-  ),
-  nextjs: mark(
-    '<circle cx="12" cy="12" r="9"/><path d="M8.5 15.5V9l7 8"/><path d="M15.5 9v5"/>',
-  ),
-  typescript: mark(
-    '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 11h5"/><path d="M10.5 11v6"/><path d="M14 17v-4a2 2 0 0 1 4 0v4"/><path d="M14 15h4"/>',
-    "#3178C6",
-  ),
-  vue: mark('<path d="M2 5h4l6 10 6-10h4l-10 16z"/>', "#41B883"),
-  svelte: mark(
-    '<path d="M15 3a5 5 0 0 0-4 1l-5 3.5a5 5 0 0 0-1 7 5 5 0 0 0 4 1.6"/><path d="M9 21a5 5 0 0 0 4-1l5-3.5a5 5 0 0 0 1-7 5 5 0 0 0-4-1.6"/>',
-    "#FF3E00",
-  ),
-  astro: mark('<path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>', "#FF5D01"),
-  tailwind: mark(
-    '<path d="M3 12c2-5 4-7 7-6s3 4 5 5 4 0 6-4"/><path d="M3 19c2-4 4-5 7-4s3 3 5 4 4 0 6-3"/>',
-    "#38BDF8",
-  ),
-  css: mark(
-    '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 8h10l-1 8-4 2-4-2z"/>',
-    "#663399",
-  ),
-  framer: mark(
-    '<path d="M5 3h14v6H12z"/><path d="M5 9h14v6H5z"/><path d="M5 15h7v6z"/>',
-    "#BB4BFF",
-  ),
-  radix: mark('<circle cx="12" cy="12" r="9"/><path d="M12 3v9l7 4"/>'),
-  storybook: mark(
-    '<path d="M5 4l12-1v18l-12-1z"/><path d="M10 10a2 2 0 1 1 3 1.7c-.6.4-1 .9-1 1.6"/><circle cx="12" cy="17" r=".6" fill="currentColor"/>',
-    "#FF4785",
-  ),
-  three: mark(
-    '<path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 2v20M3 7l18 10M21 7L3 17"/>',
-  ),
-  webgl: mark(
-    '<path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/>',
-    "#990000",
-  ),
-  canvas: mark(
-    '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 20h10"/><path d="M8 13l3-4 3 3 2-2 2 3z"/>',
-    "#E34F26",
-  ),
-  node: mark(
-    '<path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M9 9h3v6a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1"/><path d="M15 9v5a2 2 0 0 0 4 0V9"/>',
-    "#339933",
-  ),
-  postgres: mark(
-    '<ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
-    "#4169E1",
-  ),
-  drizzle: mark(
-    '<path d="M12 2v9"/><path d="M12 22v-9"/><path d="M6 7l6 4 6-4"/><path d="M6 17l6-4 6 4"/>',
-    "#C5F74F",
-  ),
-  graphql: mark(
-    '<path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 2v20M3 7l18 10M21 7L3 17"/><circle cx="12" cy="12" r="2" fill="currentColor"/>',
-    "#E10098",
-  ),
-  redis: mark(
-    '<path d="M3 7l9-3 9 3-9 3z"/><path d="M3 12l9 3 9-3"/><path d="M3 17l9 3 9-3"/>',
-    "#DC382D",
-  ),
-  vite: mark(
-    '<path d="M12 2l9 4-9 16-9-16z"/><path d="M8 8l4 9 4-9z"/>',
-    "#646CFF",
-  ),
-  docker: mark(
-    '<rect x="3" y="10" width="3" height="3"/><rect x="7" y="10" width="3" height="3"/><rect x="11" y="10" width="3" height="3"/><rect x="7" y="6" width="3" height="3"/><path d="M2 16h18a4 4 0 0 0 1-3h-4"/>',
-    "#2496ED",
-  ),
-  github: mark(
-    '<circle cx="12" cy="12" r="9"/><path d="M9 20v-3a3 3 0 0 1 0-5c-.5-1.5 0-3 0-3s2 0 3 1a8 8 0 0 1 4 0c1-1 3-1 3-1s.5 1.5 0 3a3 3 0 0 1 0 5v3"/>',
-  ),
-  playwright: mark(
-    '<path d="M3 8l5-2v10L3 18z"/><path d="M3 8v10"/><path d="M16 8l5-2v14l-5-2z"/><path d="M12 4v16"/>',
-  ),
-  lighthouse: mark(
-    '<path d="M12 3v3"/><path d="M8 20l1-9h6l1 9z"/><path d="M6 12h3M15 12h3"/><circle cx="12" cy="8" r="2"/>',
-    "#F44B21",
-  ),
+  // Mouldings
+  hardwood: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><path d="M7 3v18M17 3v18" opacity="0.45"/><path d="M10 8c1.5 1 2.5 3 2.5 4s-1 2-2.5 2" opacity="0.65"/>'),
+  gilded: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><path d="M7 7h4M7 11h4M7 15h4" opacity="0.6"/><circle cx="16.5" cy="12" r="2.5"/>', '#D4AF37'),
+  metal: glyph('<rect x="3" y="3" width="18" height="18" rx="1"/><path d="M6 6h12v12H6z" opacity="0.4"/>', '#B8BCC4'),
+  shadowbox: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><rect x="7" y="7" width="10" height="10" rx="1" opacity="0.55"/><path d="M3 3l4 4M21 3l-4 4M3 21l4-4M21 21l-4-4" opacity="0.4"/>'),
+  floating: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><rect x="9" y="9" width="6" height="6" rx="0.5"/><path d="M6 6h12v12H6z" opacity="0.3"/>'),
+  restoration: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5" opacity="0.5"/><path d="M12 2v20" stroke-dasharray="2 2"/><path d="M8 9l4-4 4 4" opacity="0.7"/>'),
+
+  // Glazing
+  museumglass: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><path d="M6 16l10-10" opacity="0.7"/><path d="M9 18l9-9" opacity="0.35"/>', '#9FC8E8'),
+  uvclear: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><circle cx="12" cy="12" r="3.5" opacity="0.8"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3" opacity="0.5"/>', '#C8B6E8'),
+  clear: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><path d="M7 15l8-8" opacity="0.55"/>'),
+  acrylic: glyph('<rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M8 14l6-6" opacity="0.55"/><path d="M11 16l5-5" opacity="0.35"/>', '#A8D8E8'),
+  antireflective: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><path d="M4 12h16" opacity="0.45"/><path d="M9 8l-3 3 3 3M15 8l3 3-3 3" opacity="0.75"/>', '#8FB8A8'),
+  noglazing: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5" stroke-dasharray="3 3"/><path d="M6 15c3-4 6-4 9 0" opacity="0.7"/>', '#A8A5A0'),
+
+  // Mounts
+  conservation: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><rect x="7.5" y="7.5" width="9" height="9" opacity="0.7"/><path d="M12 9.5v5M9.5 12h5" opacity="0.9"/>', '#E8D8A8'),
+  alphacellulose: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><rect x="7.5" y="7.5" width="9" height="9" opacity="0.5"/>', '#D8CBA8'),
+  acidfree: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><path d="M8 12h8" opacity="0.7"/>', '#C8C4B8'),
+  moisture: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><path d="M12 7c2 2.5 3 4 3 5.5a3 3 0 0 1-6 0C9 11 10 9.5 12 7z" opacity="0.75"/>', '#88B8D8'),
+  stainless: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><circle cx="12" cy="10" r="2" opacity="0.8"/><path d="M12 12v5" opacity="0.7"/>', '#C0C4CC'),
+  fluted: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><path d="M8 5v14M12 5v14M16 5v14" opacity="0.45"/>'),
+
+  // Finishing
+  mitred: glyph('<path d="M3 3h18v18H3z" opacity="0.35"/><path d="M3 12l9-9M12 21l9-9" opacity="0.85"/>'),
+  dustsealed: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><path d="M3 12h18" opacity="0.9"/><path d="M3 15h18" opacity="0.5"/>'),
+  feltpads: glyph('<rect x="3" y="4" width="18" height="15" rx="1.5"/><path d="M7 20h3M14 20h3" stroke-width="2.5" opacity="0.8"/>'),
+  hangingkit: glyph('<path d="M12 3v8"/><path d="M8 21h8"/><path d="M12 11c-3 1-5 4-5 7h10c0-3-2-6-5-7z" opacity="0.7"/>'),
+  accentline: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><rect x="8" y="8" width="8" height="8" stroke-dasharray="2 1.5" opacity="0.9"/>', '#FCD34D'),
+  plaque: glyph('<rect x="3" y="3" width="18" height="18" rx="1.5"/><rect x="6" y="10" width="12" height="5" rx="1" opacity="0.85"/><path d="M8.5 12.5h7" opacity="0.6"/>', '#C8A860'),
 };
 
 let marksWritten = 0;
@@ -124,134 +80,124 @@ for (const [name, svg] of Object.entries(MARKS)) {
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Project covers — labelled abstract art in each project's accent colour.   */
-/*  Replace these with real screenshots; the paths are already wired up.       */
+/*  2. GALLERY PLACEHOLDERS                                                   */
+/*  Each placeholder is a stylised "framed piece on a wall": a wall tone, a    */
+/*  frame profile, a mount reveal and a suggestion of the artwork. Enough to   */
+/*  judge composition and colour balance before real photography exists.       */
 /* -------------------------------------------------------------------------- */
 
-const PROJECTS = [
-  {
-    slug: "atlas",
-    label: "ATLAS UI",
-    sub: "component gallery",
-    c1: "#5B8CFF",
-    c2: "#8FB0FF",
-    count: 3,
-  },
-  {
-    slug: "flux",
-    label: "FLUX ENGINE",
-    sub: "particle runtime",
-    c1: "#FF7A59",
-    c2: "#FFB59E",
-    count: 3,
-  },
-  {
-    slug: "halo",
-    label: "HALO",
-    sub: "edge storefront",
-    c1: "#7EE7A3",
-    c2: "#B6F5CC",
-    count: 3,
-  },
-  {
-    slug: "synapse",
-    label: "SYNAPSE",
-    sub: "collaborative canvas",
-    c1: "#C084FC",
-    c2: "#E0C3FE",
-    count: 3,
-  },
-  {
-    slug: "prism",
-    label: "PRISM",
-    sub: "docs framework",
-    c1: "#FCD34D",
-    c2: "#FDE68A",
-    count: 2,
-  },
+const PIECES = [
+  { slug: 'comm-photograph', label: 'WEDDING PHOTOGRAPH', sub: 'A1 · museum glass', accent: '#5B8CFF', shots: ['cover', 'detail', 'mount'] },
+  { slug: 'comm-abstract', label: 'ABSTRACT CANVAS', sub: '1.6m · floating frame', accent: '#FF7A59', shots: ['cover', 'detail', 'elevation'] },
+  { slug: 'comm-certificate', label: 'HONOURS CERTIFICATE', sub: 'A3 · double mount', accent: '#7EE7A3', shots: ['cover', 'detail'] },
+  { slug: 'comm-memorabilia', label: 'MEDALS & MEMORABILIA', sub: 'shadow box · 60mm', accent: '#C084FC', shots: ['cover', 'detail', 'plan'] },
+  { slug: 'comm-fabric', label: 'KENTE CLOTH', sub: '2.4m · tension mount', accent: '#FCD34D', shots: ['cover', 'detail', 'section'] },
 ];
 
-const shotNames = {
-  atlas: ["cover", "codemod", "tokens"],
-  flux: ["cover", "shader", "profiler"],
-  halo: ["cover", "lighthouse", "architecture"],
-  synapse: ["cover", "offline", "crdt"],
-  prism: ["cover", "playground"],
-};
+/**
+ * `detail` shots zoom into a corner joint rather than showing a whole wall —
+ * which is the point of a detail shot, and makes the placeholder read correctly
+ * at thumbnail size.
+ */
+function placeholder({ label, sub, accent, shot, index, total }) {
+  const isDetail = shot === 'detail';
+  const isPlan = shot === 'plan' || shot === 'elevation' || shot === 'section';
 
-function cover({ label, sub, c1, c2, variant, total }) {
-  // A deterministic abstract composition — dots, ribbons and a vignette — so the
-  // placeholder reads as intentional design rather than a grey box.
-  const seed = label.length + variant * 7;
-  const dots = Array.from({ length: 26 }, (_, i) => {
-    const x = ((seed * (i + 3) * 37) % 1000) / 10;
-    const y = ((seed * (i + 5) * 53) % 560) / 10;
-    const r = 1 + (((seed + i) * 17) % 30) / 10;
-    return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" fill="#EDEAE4" opacity="${(0.1 + (i % 5) * 0.07).toFixed(2)}"/>`;
-  }).join("");
+  // Wall tone shifts slightly per shot so a row of placeholders does not look
+  // like the same image repeated.
+  const wall = isDetail ? '#0E0E10' : isPlan ? '#0C0C0E' : '#111114';
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 625" width="1000" height="625" role="img" aria-label="${label} placeholder">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#101012"/>
+    <linearGradient id="wall" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="${wall}"/>
       <stop offset="100%" stop-color="#0A0A0B"/>
     </linearGradient>
-    <radialGradient id="glow" cx="30%" cy="18%" r="80%">
-      <stop offset="0%" stop-color="${c1}" stop-opacity="0.60"/>
-      <stop offset="55%" stop-color="${c2}" stop-opacity="0.14"/>
-      <stop offset="100%" stop-color="${c2}" stop-opacity="0"/>
+    <radialGradient id="lamp" cx="34%" cy="14%" r="72%">
+      <stop offset="0%" stop-color="#EDEAE4" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#EDEAE4" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="glow2" cx="82%" cy="88%" r="65%">
-      <stop offset="0%" stop-color="${c2}" stop-opacity="0.30"/>
-      <stop offset="100%" stop-color="${c2}" stop-opacity="0"/>
-    </radialGradient>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M40 0H0V40" fill="none" stroke="#EDEAE4" stroke-opacity="0.055"/>
-    </pattern>
-    <filter id="soft"><feGaussianBlur stdDeviation="26"/></filter>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${accent}" stop-opacity="0.30"/>
+      <stop offset="48%" stop-color="${accent}" stop-opacity="0.08"/>
+      <stop offset="52%" stop-color="#EDEAE4" stop-opacity="0.09"/>
+      <stop offset="100%" stop-color="${accent}" stop-opacity="0.16"/>
+    </linearGradient>
+    <linearGradient id="art" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0%" stop-color="${accent}" stop-opacity="0.85"/>
+      <stop offset="60%" stop-color="${accent}" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#0A0A0B" stop-opacity="0.6"/>
+    </linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#000" flood-opacity="0.55"/></filter>
   </defs>
 
-  <rect width="1000" height="625" fill="url(#bg)"/>
-  <rect width="1000" height="625" fill="url(#grid)"/>
-  <rect width="1000" height="625" fill="url(#glow)"/>
-  <rect width="1000" height="625" fill="url(#glow2)"/>
+  <rect width="1000" height="625" fill="url(#wall)"/>
+  <rect width="1000" height="625" fill="url(#lamp)"/>
 
-  <g filter="url(#soft)" opacity="0.55">
-    <rect x="${-80 + variant * 60}" y="${140 + variant * 30}" width="420" height="420" rx="80" fill="${c1}" opacity="0.32"/>
+  ${
+    isDetail
+      ? // Corner joint macro: two moulding faces meeting at a mitre.
+        `<g filter="url(#shadow)">
+    <path d="M120 640 L120 210 L360 60 L860 60 L860 640 Z" fill="#17171A"/>
+    <path d="M120 210 L360 60 L860 60" fill="none" stroke="${accent}" stroke-opacity="0.55" stroke-width="3"/>
+    <path d="M150 640 L150 224 L372 90 L830 90 L830 640 Z" fill="none" stroke="#EDEAE4" stroke-opacity="0.16" stroke-width="2"/>
+    <path d="M360 60 L360 640" stroke="#EDEAE4" stroke-opacity="0.10" stroke-width="1.5" stroke-dasharray="7 7"/>
   </g>
-
-  <g>${dots}</g>
-
-  <!-- A ribbon suggesting motion / data -->
-  <path d="M-40 ${430 - variant * 40} C 220 ${300 + variant * 40}, 520 ${560 - variant * 50}, 1040 ${330 + variant * 30}"
-        fill="none" stroke="${c1}" stroke-opacity="0.75" stroke-width="2"/>
-  <path d="M-40 ${470 - variant * 40} C 240 ${350 + variant * 40}, 540 ${600 - variant * 50}, 1040 ${380 + variant * 30}"
-        fill="none" stroke="${c2}" stroke-opacity="0.35" stroke-width="1.2"/>
+  <g stroke="#EDEAE4" stroke-opacity="0.14" stroke-width="1.4" fill="none">
+    <path d="M158 300 L200 300M158 340 L182 340M158 380 L168 380"/>
+  </g>`
+      : isPlan
+        ? // Scale drawing: a frame elevation with dimensions.
+          `<g filter="url(#shadow)">
+    <rect x="230" y="120" width="540" height="386" fill="none" stroke="#EDEAE4" stroke-opacity="0.45" stroke-width="2"/>
+    <rect x="258" y="148" width="484" height="330" fill="none" stroke="#EDEAE4" stroke-opacity="0.20" stroke-width="1.5"/>
+    <rect x="286" y="176" width="428" height="274" fill="url(#art)" opacity="0.35"/>
+  </g>
+  <g stroke="${accent}" stroke-opacity="0.75" stroke-width="1.2" fill="none">
+    <path d="M230 536 L770 536M230 528v16M770 528v16"/>
+    <path d="M222 120 L222 506M214 120h16M214 506h16"/>
+  </g>
+  <g font-family="ui-monospace, monospace" font-size="13" fill="${accent}" fill-opacity="0.85" letter-spacing="1.5">
+    <text x="500" y="562" text-anchor="middle">OVERALL WIDTH</text>
+    <text x="200" y="316" text-anchor="middle" transform="rotate(-90 200 316)">HEIGHT</text>
+  </g>`
+        : // Hero shot: a framed piece, hung off-centre on a wall, casting a shadow.
+          `<g filter="url(#shadow)">
+    <rect x="${252 + index * 14}" y="${96 + index * 8}" width="${468 - index * 28}" height="${372 - index * 16}" fill="#15151A"/>
+    <rect x="${274 + index * 14}" y="${118 + index * 8}" width="${424 - index * 28}" height="${328 - index * 16}" fill="#F4F2EC"/>
+    <rect x="${304 + index * 14}" y="${148 + index * 8}" width="${364 - index * 28}" height="${268 - index * 16}" fill="url(#art)"/>
+    <rect x="${274 + index * 14}" y="${118 + index * 8}" width="${424 - index * 28}" height="${328 - index * 16}" fill="url(#glass)"/>
+    <rect x="${252 + index * 14}" y="${96 + index * 8}" width="${468 - index * 28}" height="${372 - index * 16}" fill="none" stroke="${accent}" stroke-opacity="0.5" stroke-width="2"/>
+  </g>
+  <g stroke="#EDEAE4" stroke-opacity="0.08" stroke-width="1">
+    <path d="M0 96h1000M0 468h1000"/>
+  </g>`
+  }
 
   <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
-    <text x="56" y="86" fill="${c2}" font-size="15" letter-spacing="5">${String(variant + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}</text>
-    <text x="56" y="527" fill="#EDEAE4" font-size="60" font-weight="600" letter-spacing="-1.5">${label}</text>
-    <text x="56" y="565" fill="#EDEAE4" fill-opacity="0.55" font-size="17" letter-spacing="3">${sub.toUpperCase()}</text>
+    <text x="52" y="70" fill="${accent}" font-size="14" letter-spacing="4">${String(index + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}</text>
+    <text x="52" y="556" fill="#EDEAE4" font-size="42" font-weight="600" letter-spacing="-1">${label}</text>
+    <text x="52" y="586" fill="#EDEAE4" fill-opacity="0.5" font-size="15" letter-spacing="2.5">${sub.toUpperCase()}</text>
   </g>
 
-  <rect x="0.5" y="0.5" width="999" height="624" fill="none" stroke="${c1}" stroke-opacity="0.25"/>
-
-  <!-- Watermark so nobody mistakes a placeholder for finished work -->
-  <text x="986" y="600" text-anchor="end" fill="#EDEAE4" fill-opacity="0.28" font-size="13" font-family="ui-monospace, monospace" letter-spacing="2">PLACEHOLDER — REPLACE ME</text>
+  <rect x="0.5" y="0.5" width="999" height="624" fill="none" stroke="${accent}" stroke-opacity="0.18"/>
+  <text x="948" y="600" text-anchor="end" fill="#EDEAE4" fill-opacity="0.3" font-size="12" font-family="ui-monospace, monospace" letter-spacing="1.5">PLACEHOLDER</text>
 </svg>
 `;
 }
 
 let coversWritten = 0;
-for (const project of PROJECTS) {
-  const names = shotNames[project.slug];
-  names.forEach((name, i) => {
-    const svg = cover({ ...project, variant: i, total: names.length });
-    if (write(resolve(workDir, `${project.slug}-${name}.svg`), svg))
-      coversWritten++;
+for (const piece of PIECES) {
+  piece.shots.forEach((shot, i) => {
+    const svg = placeholder({
+      ...piece,
+      shot,
+      index: i,
+      total: piece.shots.length,
+    });
+    if (write(resolve(workDir, `${piece.slug}-${shot}.svg`), svg)) coversWritten++;
   });
 }
 
-console.log(
-  `\nmarks written: ${marksWritten}, covers written: ${coversWritten}`,
-);
+console.log(`\nmarks: ${marksWritten} written · gallery: ${coversWritten} written`);
+console.log(marksWritten + coversWritten === 0 ? 'Everything already exists.' : 'Done — replace these with real photography before launch.');

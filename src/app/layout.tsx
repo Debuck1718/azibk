@@ -3,13 +3,13 @@ import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Cursor } from "@/components/ui/Cursor";
 import { Nav } from "@/components/ui/Nav";
-import { profile } from "@/lib/site";
+import { profile, parent } from "@/lib/site";
 
 /**
  * Three typefaces, each with a job:
  *   Space Grotesk — display. Geometric, slightly odd, not the usual portfolio face.
  *   Inter         — body. Neutral and legible at small sizes.
- *   JetBrains Mono— labels, numbers, anything that should read as "engineered".
+ *   JetBrains Mono— labels, numbers, anything that should read as "workshop".
  *
  * All three are loaded as CSS variables so Tailwind's `font-display` etc. point
  * at them, and `display: swap` means text paints immediately in the fallback.
@@ -44,13 +44,15 @@ export const metadata: Metadata = {
   },
   description: profile.blurb,
   keywords: [
-    "framework engineer",
-    "React",
-    "Next.js",
-    "TypeScript",
-    "WebGL",
-    "design systems",
-    "developer portfolio",
+    "picture framing",
+    "custom frames",
+    "bespoke framing",
+    "conservation framing",
+    "museum glass",
+    "shadow box frame",
+    "picture framer Ghana",
+    "canvas framing",
+    "certificate framing",
   ],
   authors: [{ name: profile.name }],
   creator: profile.name,
@@ -104,18 +106,34 @@ export default function RootLayout({
 
         <main className="relative z-10">{children}</main>
 
-        {/* Structured data helps the profile surface correctly in search. */}
+        {/* Structured data. `LocalBusiness` is what actually helps a framing
+            studio surface in search and maps — a `Person` schema would tell
+            Google the wrong thing entirely. The `parentOrganization` link is
+            what ties this site to Evantra De-Buckman Ventures. */}
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Person",
+              "@type": "LocalBusiness",
               name: profile.name,
-              jobTitle: profile.role,
+              description: profile.blurb,
               email: `mailto:${profile.email}`,
+              telephone: profile.phone,
               url: siteUrl,
+              priceRange: "GH₵₵",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Accra",
+                addressCountry: "GH",
+              },
+              areaServed: "Ghana",
+              parentOrganization: {
+                "@type": "Organization",
+                name: parent.name,
+                url: parent.url,
+              },
               sameAs: profile.socials.map((s) => s.href),
             }),
           }}

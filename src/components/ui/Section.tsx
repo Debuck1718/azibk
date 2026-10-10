@@ -22,8 +22,8 @@ export function Section({
 }) {
   return (
     <section id={id} className={`relative scroll-mt-24 ${className}`}>
-      <div className="shell py-24 md:py-32 lg:py-40">
-        <header className="mb-14 md:mb-20">
+      <div className="shell py-16 sm:py-20 md:py-32 lg:py-40">
+        <header className="mb-10 sm:mb-14 md:mb-20">
           <div className="mb-6 flex items-start justify-between gap-6">
             <span className="eyebrow">
               <span className="text-[rgb(var(--accent))]">{index}</span>

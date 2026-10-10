@@ -43,7 +43,9 @@ export function ProjectMedia({
   const [failed, setFailed] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
-  const contain = image.kind === "screen";
+  // A `plane` (plan, diagram, scale drawing) must never be cropped. Photography
+  // and detail shots fill the frame instead.
+  const contain = image.kind === "plane" || image.src.endsWith('.png') || image.src.endsWith('.jpg') || image.src.endsWith('.jpeg');
 
   return (
     <figure className={`group/media relative ${className}`}>
@@ -60,8 +62,10 @@ export function ProjectMedia({
               src={image.src}
               alt={image.alt}
               fill
-              // `screen` shots must never be cropped; scenes may fill the frame.
-              className={`transition-all duration-[900ms] ease-expo group-hover/media:scale-[1.03] ${
+              // `plane` shots are contained so nothing is cropped; photo and
+              // detail shots fill the frame. Portrait photos retain their
+              // source aspect ratio rather than being forced into a crop.
+              className={`transition-all duration-[900ms] ease-expo md:group-hover/media:scale-[1.03] ${
                 contain ? "object-contain p-3" : "object-cover"
               } ${loaded ? "opacity-100" : "opacity-0"}`}
               sizes="(min-width: 1024px) 60vw, 100vw"

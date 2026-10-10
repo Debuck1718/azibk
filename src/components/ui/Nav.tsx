@@ -114,14 +114,14 @@ export function Nav() {
 
           <div className="flex items-center gap-4">
             <a
-              href={`mailto:${profile.email}`}
+              href="#order"
               className="group hidden items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.18em] md:flex"
             >
               <span
                 aria-hidden="true"
                 className="h-1.5 w-1.5 rounded-full bg-[rgb(var(--accent))] animate-pulse-soft"
               />
-              <span className="link-underline">Get in touch</span>
+              <span className="link-underline">Order a frame</span>
             </a>
 
             {/* Mobile toggle */}

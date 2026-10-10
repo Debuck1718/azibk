@@ -52,18 +52,22 @@ export function About() {
 
           <dl className="mt-8 space-y-3 font-mono text-[0.66rem] uppercase tracking-[0.16em]">
             <div className="flex justify-between gap-4 border-b border-ink-line pb-3">
-              <dt className="text-bone-faint">Based</dt>
+              <dt className="text-bone-faint">Studio</dt>
               <dd className="text-right">{profile.location}</dd>
             </div>
             <div className="flex justify-between gap-4 border-b border-ink-line pb-3">
-              <dt className="text-bone-faint">Focus</dt>
-              <dd className="text-right">Frameworks & tooling</dd>
+              <dt className="text-bone-faint">Specialism</dt>
+              <dd className="text-right">Conservation framing</dd>
+            </div>
+            <div className="flex justify-between gap-4 border-b border-ink-line pb-3">
+              <dt className="text-bone-faint">Turnaround</dt>
+              <dd className="text-right">2 weeks typical</dd>
             </div>
             <div className="flex justify-between gap-4 border-b border-ink-line pb-3">
               <dt className="text-bone-faint">Status</dt>
               <dd className="flex items-center justify-end gap-2 text-right">
                 <span className="h-1.5 w-1.5 rounded-full bg-[rgb(var(--accent))] animate-pulse-soft" />
-                Available
+                Taking commissions
               </dd>
             </div>
           </dl>
@@ -78,15 +82,13 @@ export function About() {
             <div className="hairline" />
             <div className="grid max-w-2xl gap-6 sm:grid-cols-2">
               <p className="text-sm leading-relaxed text-bone-dim">
-                I care about the parts of an interface that are invisible when
-                they work: the focus order, the loading state, the error
-                boundary, the build step that catches a regression before a
-                customer does.
+                We care about the parts of a frame that are invisible when they are done
+                properly: the mount that stops a print sticking, the backing that keeps
+                insects out, the joint that stays closed when the air changes.
               </p>
               <p className="text-sm leading-relaxed text-bone-dim">
-                My favourite outcome on a project is being able to leave it. A
-                framework that a team can extend without me is worth more than
-                one that only I understand.
+                The best outcome on any commission is that the frame disappears. You should
+                only ever notice the picture, never the thing holding it.
               </p>
             </div>
           </div>
@@ -118,15 +120,15 @@ export function About() {
 
           {/* Toolbelt — the honest short list */}
           <div data-reveal className="will-reveal">
-            <h3 className="eyebrow mb-5">Currently reaching for</h3>
+            <h3 className="eyebrow mb-5">What we keep on the bench</h3>
             <ul className="flex flex-wrap gap-x-6 gap-y-3">
               {[
-                "Next.js App Router",
-                "React Server Components",
-                "Drizzle",
-                "Vitest",
-                "WebGPU",
-                "Turborepo",
+                "Museum glass",
+                "Cotton-rag board",
+                "Japanese paper hinges",
+                "French cleats",
+                "Gold leaf",
+                "Hardwood mouldings",
               ].map((tool) => (
                 <li
                   key={tool}
